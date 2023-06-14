@@ -1,82 +1,63 @@
 <?php
 
-namespace Modules\SIGAC\Http\Controllers;
+namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use Modules\SICA\Entities\App;
+use App\Models\Person;
+use App\Models\Attendance;
+use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
+    public function asistencia(Request $request)
     {
-        $view = ['titlePage'=>trans('sigac::attendance.Attendance'), 'titleView'=>trans('sigac::attendance.Attendance registration')];
-        $apps = App::get();
-        return view('sigac::attendance.index', compact('apps', 'view'));
+        $userId = $request->input('person_id');
+        $state = $request->input('state');
+
+        // Verificar si el usuario existe
+        $user = Person::find($userId);
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
+        }
+
+        // Tomar la fecha actual
+        $fechaActual = Carbon::now()->format('Y-m-d');
+
+        // Tomar la asistencia
+        $attendance = new Attendance();
+        $attendance->person_id = $userId;
+        $attendance->state = $state; // Estado tomado de la solicitud
+        $attendance->date = $fechaActual;
+        $attendance->instructor_program_id = $request->instructor_program_id;
+        $attendance->save();
+
+        return response()->json(['message' => 'Asistencia tomada con éxito'], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
-    {
-        return view('sigac::create');
+    public function listattendance(){
+
+        $attendance = Attendance::get();
+
+        return response ()->json($attendance);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+    public function modificarAsistencia(Request $request, $attendanceId)
     {
-        //
+    $attendance = Attendance::where('id', $attendanceId)->first();
+    $state = $request->input('state');
+
+    // Verificar si la asistencia existe
+    if (!$attendance) {
+        return response()->json(['error' => 'Asistencia no encontrada'], 404);
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('sigac::show');
+    // Modificar el estado de la asistencia
+    $attendance->state = $state; // Estado tomado de la solicitud
+    $attendance->save();
+
+    return response()->json(['message' => 'Asistencia modificada con éxito'], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('sigac::edit');
-    }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }
