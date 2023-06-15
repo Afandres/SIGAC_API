@@ -7,6 +7,8 @@ use Modules\SICA\Http\Controllers\people\ApprenticeController;
 use Modules\SIGAC\Http\Controllers\PersonController;
 use Modules\SIGAC\Http\Controllers\PointController;
 use Modules\SIGAC\Http\Controllers\ExcuseController;
+use Modules\SIGAC\Http\Controllers\FaultController;
+use Modules\SIGAC\Http\Controllers\ApprenticePermissionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,10 +30,10 @@ Route::middleware('auth:api')->get('/sigac', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('sigac')->group(function (){
         // Logout
-        Route::get('/logout', [AuthController::class, 'logout']);
+        Route::get('logout', [AuthController::class, 'logout']);
 
         // Programacion instructor
-        Route::get('/instructor_program/list/{instructor}/{date}/{time}', [InstructorProgramController::class, 'list']);
+        Route::get('instructor_program/list/{instructor}/{date}/{time}', [InstructorProgramController::class, 'list']);
 
         // Asistencias
         Route::post('attendances', [AttendanceController::class, 'asistencia']);
@@ -43,6 +45,17 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('excuses', [ExcuseController::class, 'store']);
         Route::put('excuses/{excuseId}', [ExcuseController::class, 'modificarExcuse']);
         Route::post('excusetype',[ExcuseController::class , 'excusetype']);//-> Registrar tipo de excusa
+
+        //Permisos
+        Route::post('/permissions', [ApprenticePermissionController::class, 'store']);
+        Route::put('/permissions/{permissionId}', [ApprenticePermissionController::class, 'modificarPermission']);
+        Route::post('/permissiontype',[ApprenticePermissionController::class , 'permissiontype']);//-> Registrar tipo de permiso
+
+        //Faltas
+        Route::get('/faults/list', [FaultController::class, 'listfault']);
+        Route::post('/faults', [FaultController::class, 'store']);
+        Route::put('/faults/{faultId}', [FaultController::class, 'modificarFault']);
+        Route::post('/faulttype',[FaultController::class , 'faulttype']);//-> Registrar tipo de falta
 
         //Aprendices
         Route::get('/apprentices/{courseCode}', [ApprenticeController::class, 'showApprenticesByCourseCode']);
