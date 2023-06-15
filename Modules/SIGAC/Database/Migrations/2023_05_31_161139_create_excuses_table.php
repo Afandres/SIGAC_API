@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('state');
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date')->nullable()->default(null);
             $table->string('description');
             $table->binary('evidence');
             $table->foreignId('excuse_type_id')->constrained()->onDelete('cascade');

@@ -5,6 +5,8 @@ use Modules\SIGAC\Http\Controllers\AuthController;
 use Modules\SIGAC\Http\Controllers\AttendanceController;
 use Modules\SICA\Http\Controllers\people\ApprenticeController;
 use Modules\SIGAC\Http\Controllers\PersonController;
+use Modules\SIGAC\Http\Controllers\PointController;
+use Modules\SIGAC\Http\Controllers\ExcuseController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,6 +38,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('attendances/list', [AttendanceController::class, 'listattendance']);
         Route::put('attendances/{attendanceId}', [AttendanceController::class, 'modificarAsistencia']);
 
+        //excusas
+        Route::get('excuses/list', [ExcuseController::class, 'listexcuse']);
+        Route::post('excuses', [ExcuseController::class, 'store']);
+        Route::put('excuses/{excuseId}', [ExcuseController::class, 'modificarExcuse']);
+        Route::post('excusetype',[ExcuseController::class , 'excusetype']);//-> Registrar tipo de excusa
+
         //Aprendices
         Route::get('/apprentices/{courseCode}', [ApprenticeController::class, 'showApprenticesByCourseCode']);
 
@@ -44,5 +52,8 @@ Route::middleware('auth:sanctum')->group(function () {
         
         //Actualizar datos de la persona
         Route::put('person/updateinformation/{personId}', [PersonController::class, 'updateinformationPerson']);
+
+        //puntos
+        Route::delete('/points/{pointId}', [PointController::class, 'eliminarpoint']);
     });
 });
