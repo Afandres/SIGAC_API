@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace Modules\SIGAC\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Apprentice;
+use App\Models\SICA\Entities\Apprentice;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -24,21 +24,17 @@ class AuthController extends Controller
     {
         //validate fields
         $attrs = $request->validate([
-            'name' => 'required|string',
-            'last_name' => 'required|string',
+            'nickname' => 'required|string',
+            'person_id' => 'required|integer',
             'email' => 'required|email|unique:users,email',
-            'telephone' => 'required|integer',
-            'role' => 'required|string',
             'password' => 'required|min:6|confirmed'
         ]);
 
         //create user
         $user = User::create([
-            'name' => $attrs['name'],
-            'last_name' => $attrs['last_name'],
-            'telephone' => $attrs['telephone'],
+            'nickname' => $attrs['nickname'],
+            'person_id' => $attrs['person_id'],
             'email' => $attrs['email'],
-            'role' => $attrs['role'],
             'password' => bcrypt($attrs['password'])
         ]);
 

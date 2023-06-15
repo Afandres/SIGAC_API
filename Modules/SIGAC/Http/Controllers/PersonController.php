@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\SIGAC\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Person;
+use Modules\SICA\Entities\Person;
 
 class PersonController extends Controller
 {

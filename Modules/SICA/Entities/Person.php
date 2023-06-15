@@ -14,6 +14,12 @@ use Modules\EVS\Entities\Authorized;
 use App\Models\User;
 use Modules\SICA\Entities\ProductiveUnit;
 use Modules\SICA\Entities\Event;
+use Modules\SIGAC\Entities\Fault;
+use Modules\SIGAC\Entities\ApprenticePermission;
+use Modules\SIGAC\Entities\Point;
+use Modules\SIGAC\Entities\InstructorProgram;
+use Modules\SIGAC\Entities\Attendance;
+use Modules\SIGAC\Entities\Excuse;
 
 class Person extends Model implements Auditable
 {
@@ -24,7 +30,7 @@ class Person extends Model implements Auditable
 
     use HasFactory; // Generación de datos de prueba
 
-    protected $fillable = [ // Atributos modificables (asignación masiva)
+    /*protected $fillable = [ // Atributos modificables (asignación masiva)
         'document_type',
         'document_number',
         'date_of_issue',
@@ -48,7 +54,7 @@ class Person extends Model implements Auditable
         'sena_email',
         'avatar',
         'population_group_id'
-    ];
+    ];*/
 
     protected $dates = ['deleted_at']; // Atributos que deben ser tratados como objetos Carbon (para aprovechar las funciones de formato y manipulación de fecha y hora)
 
@@ -111,6 +117,32 @@ class Person extends Model implements Auditable
     }
     public function inventories(){ // Accede a todos los registros de inventarios que están relacionados con esta persona
         return $this->hasMany(Inventory::class);
+    }
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+    public function points()
+    {
+        return $this->hasMany(Point::class);
+    }
+    public function faults()
+    {
+        return $this->hasMany(Fault::class);
+    }
+
+    public function instructorprograms()
+    {
+        return $this->hasMany(InstructorProgram::class);
+    }
+
+    public function excuses()
+    {
+        return $this->hasMany(Excuse::class);
+    }
+    public function apprenticepermissions()
+    {
+        return $this->hasMany(ApprenticePermission::class);
     }
 
 

@@ -56,7 +56,6 @@ class Apprentice extends Model implements Auditable
         return $this->belongsToMany(Asistencia::class)->withTimestamps()->withPivot('asistencia');
     }
 
-
     // Configuración de factory para la generación de datos de pruebas
     protected static function newFactory()
     {

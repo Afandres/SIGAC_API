@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\SIGAC\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Person;
-use App\Models\Attendance;
+use Illuminate\Support\Facades\Auth;
+use Modules\SICA\Entities\Person;
+use Modules\SIGAC\Entities\Attendance;
 use Carbon\Carbon;
 
 class AttendanceController extends Controller
