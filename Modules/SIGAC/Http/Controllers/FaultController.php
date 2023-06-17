@@ -49,7 +49,7 @@ class FaultController extends Controller
     }
 
     //funcion para modificar el estado la falta
-    public function modificarFault(Request $request, $faultId)
+    public function updatefault(Request $request, $faultId)
     {
         $fault = Fault::where('id', $faultId)->first();
        

@@ -39,7 +39,7 @@ class ApprenticePermissionController extends Controller
         return response()->json(['message' => 'Permiso creado exitosamente'], 201);
     }
     //funcion para modificar el estado del permiso
-    public function modificarPermission(Request $request, $permissionId)
+    public function updatepermisison(Request $request, $permissionId)
     {
     $permisison = ApprenticePermission::where('id', $permissionId)->first();
     $state = $request->input('state');

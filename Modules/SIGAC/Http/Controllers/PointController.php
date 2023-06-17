@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class PointController extends Controller
 {
-    public function points(Request $request)
+    public function point(Request $request)
     {
     $userId = $request->input('person_id');
     $state = $request->input('state');

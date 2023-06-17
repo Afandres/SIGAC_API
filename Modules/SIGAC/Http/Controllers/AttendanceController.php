@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
-    public function asistencia(Request $request)
+    public function attendance(Request $request)
     {
         $userId = $request->input('person_id');
         $state = $request->input('state');
@@ -43,7 +43,7 @@ class AttendanceController extends Controller
         return response ()->json($attendance);
     }
 
-    public function modificarAsistencia(Request $request, $attendanceId)
+    public function updateattendnce(Request $request, $attendanceId)
     {
     $attendance = Attendance::where('id', $attendanceId)->first();
     $state = $request->input('state');

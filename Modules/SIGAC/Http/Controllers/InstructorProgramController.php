@@ -5,6 +5,7 @@ namespace Modules\SIGAC\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\SIGAC\Entities\InstructorProgram;
+use Modules\SICA\Entities\Course;
 
 class InstructorProgramController extends Controller
 {
@@ -13,7 +14,6 @@ class InstructorProgramController extends Controller
             ->where('person_id', $instructor)
             ->where('date', $date)
             ->whereTime('start_time', '<=', $time)
-            ->whereTime('end_time', '>=', $time)
             ->get();
     
         return response([

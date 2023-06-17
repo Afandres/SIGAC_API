@@ -57,7 +57,7 @@ class ExcuseController extends Controller
 
         return response()->json(['message' => 'Excuse creada exitosamente'], 201);
     }
-    public function modificarExcuse(Request $request, $excuseId)
+    public function updateexcuse(Request $request, $excuseId)
     {
     $excuse = Excuse::where('id', $excuseId)->first();
     $state = $request->input('state');
